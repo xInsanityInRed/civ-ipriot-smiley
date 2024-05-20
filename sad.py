@@ -1,9 +1,11 @@
+import time
 from smiley import Smiley
+from blinkable import Blinkable
 
 
-class Sad(Smiley):
+class Sad(Smiley, Blinkable):
     def __init__(self):
-        super().__init__()
+        super().__init__(complexion=self.BLUE)
 
         self.draw_mouth()
         self.draw_eyes()
@@ -23,4 +25,14 @@ class Sad(Smiley):
         """
         eyes = [10, 13, 18, 21]
         for pixel in eyes:
-            self.pixels[pixel] = self.BLANK if wide_open else self.YELLOW
+            self.pixels[pixel] = self.BLANK if wide_open else self.complexion()
+
+    def blink(self, delay=0.01):
+        """
+        Task 5b: Create blink() method in the Sad class with the same prototype.
+        """
+        self.draw_eyes(wide_open=False)
+        self.show()
+        time.sleep(delay)
+        self.draw_eyes(wide_open=True)
+        self.show()
